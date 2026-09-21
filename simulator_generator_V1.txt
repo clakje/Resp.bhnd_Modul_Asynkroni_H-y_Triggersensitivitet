@@ -1,0 +1,123 @@
+Kravspesifikasjon og Arkitektur: Scenario-generator
+1. Konsept og Arkitektur
+Scenario-generatoren skal bygges som en separat, frittstående webapplikasjon (f.eks. generator.html med tilhørende generator.js). Generatoren gjenbruker den eksisterende fysikkmotoren (simulator.js) og tegnemotoren (renderer.js) for å gi sanntidsvisning av flow-, trykk- og volumkurver, men har et utvidet brukergrensesnitt skreddersydd for scenario-forfattere.
+
+Hovedmål: Å la fageksperter designe en klinisk tilstand, verifisere kurvene visuelt, velge hvilke innstillinger kursdeltakeren skal ha tilgang til, og eksportere dette som en pakke (JSON + Markdown) som senere danner grunnlaget for selve opplæringsprogrammet.
+
+2. Brukergrensesnitt (UI) for Generatoren
+Generatoren deles visuelt inn i tre hovedpaneler:
+
+Sanntidsvisning (Canvas/WebGL): Viser de løpende kurvene nøyaktig slik de vil se ut i den endelige simulatoren.
+
+Kontrollpanel for Pasient & Maskin:
+
+Inneholder alle tenkelige justeringer for pasient (Compliance, Resistance, Pmus, Spontan frekvens, etc.) og maskin (Modus, PEEP, FiO2, Trykkstøtte, Rise time, Trigger, etc.).
+
+Ved siden av hver eneste innstilling er det en avkrysningsboks (checkbox). Denne styrer utelukkende om parameteren skal bygges inn i UI-et til den endelige kurs-simulatoren.
+
+Metadata og Eksport: Tekstfelt for scenarioets tittel, beskrivelse og læringsmål, samt eksportknapper.
+
+3. Realistisk Pasientrespons (Fysikkmotoren)
+For at pasienten skal respondere naturtro på maskinjusteringer, må simulator.js styres av den fysiologiske bevegelsesligningen (Equation of Motion for the respiratory system). Generatoren setter de statiske parameterne, mens motoren kalkulerer den dynamiske responsen kontinuerlig:
+
+P 
+aw
+​
+ (t)+P 
+mus
+​
+ (t)= 
+C
+V(t)
+​
+ +R⋅ 
+V
+˙
+ (t)+PEEP
+Hvor:
+
+P 
+aw
+​
+  = Trykket levert av maskinen (avhengig av innstillinger som PEEP og Trykkstøtte)
+
+P 
+mus
+​
+  = Pasientens egen muskelinnsats (satt i generatoren)
+
+V = Volum, C = Compliance, R = Resistance,  
+V
+˙
+  = Flow.
+
+Når deltakeren endrer maskinens trykk i det eksporterte scenarioet, vil ligningen automatisk resultere i endret flow og volum basert på pasientens låste C og R.
+
+4. Datastruktur og Eksport
+Når forfatteren klikker "Eksporter Scenario", genererer programmet to filer som lastes ned til brukerens maskin:
+
+A. Konfigurasjonsfilen (scenario_navn.json)
+Denne filen er maskinlesbar og mates direkte inn i kurs-simulatoren for å bygge oppgaven.
+
+JSON
+{
+  "meta": {
+    "title": "KOLS med eksaserbasjon",
+    "description": "Pasienten er takypnøisk med høy motstand i luftveiene.",
+    "id": "scenario_001"
+  },
+  "initialState": {
+    "patient": {
+      "compliance": 60,
+      "resistance": 15,
+      "spontRR": 24,
+      "pmus": 8
+    },
+    "machine": {
+      "mode": "PSV",
+      "peep": 5,
+      "pressureSupport": 10,
+      "fio2": 30,
+      "triggerSens": 2
+    }
+  },
+  "uiConfig": {
+    "visibleControls": [
+      "peep",
+      "pressureSupport",
+      "fio2"
+    ]
+  }
+}
+B. Arbeidsdokumentet (scenario_navn.md)
+En menneskelesbar fil genereres parallelt. Denne brukes av utviklere/instruktører som et tekstdokument for å planlegge fasit og pedagogisk progresjon.
+
+Markdown
+# KOLS med eksaserbasjon
+**Beskrivelse:** Pasienten er takypnøisk med høy motstand i luftveiene.
+
+## Pasientens Starttilstand (Skjult for deltaker)
+* Compliance: 60 ml/cmH2O
+* Resistance: 15 cmH2O/L/s
+* Spontan frekvens: 24 /min
+* Muskelinnsats (Pmus): 8 cmH2O
+
+## Maskinens Starttilstand
+* Modus: PSV
+* PEEP: 5 cmH2O (Synlig og justerbar)
+* Trykkstøtte: 10 cmH2O (Synlig og justerbar)
+* FiO2: 30 % (Synlig og justerbar)
+* Trigger: 2 L/min (Skjult)
+
+## Fasit og Måloppnåelse
+*(Fylles ut manuelt etter testing)*
+* **Optimal PEEP:** [ Skriv inn fasit her ]
+* **Forventet respons i kurve:** [ Beskriv forventet flow-kurve ]
+5. Integrasjon i Kurs-simulatoren (Neste fase)
+Når generatoren er ferdig, vil kurs-simulatoren skrives om for å ta imot JSON-filen.
+
+Initialisering: app.js leser scenario_001.json.
+
+UI-bygging: Et script itererer gjennom uiConfig.visibleControls. Elementer som ikke finnes i listen, fjernes fra DOM-en (f.eks. med element.style.display = 'none'), slik at grensesnittet forblir rent.
+
+Fasit-funksjon: En "Vis Fasit"-knapp legger et semi-transparent overlegg av optimale kurver (rendret på et eget Canvas-lag) over deltakerens aktive kurver, basert på instruktørens forhåndsdefinerte verdier.

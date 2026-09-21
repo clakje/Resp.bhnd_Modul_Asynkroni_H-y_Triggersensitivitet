@@ -1,0 +1,129 @@
+{
+  "schemaVersion": "1.0",
+  "generator": "Respirator Scenario-Generator",
+  "exportedAt": "2026-09-18T10:43:00.925Z",
+  "meta": {
+    "id": "scenario - NIV Optimale kurver",
+    "title": "NIV Optimale kurver",
+    "description": "NIV Optimale kurver",
+    "author": "Petter",
+    "learningObjectives": [
+      "Kjenne til optimale kurver ved NIV"
+    ],
+    "answerKey": {
+      "optimalSettings": "",
+      "expectedResponse": "",
+      "notes": ""
+    }
+  },
+  "initialState": {
+    "machine": {
+      "mode": "PS",
+      "ipap": 10,
+      "epap": 5,
+      "vcTidalVolume": 500,
+      "vcPeakFlow": 60,
+      "vcFlowPattern": "constant",
+      "inspPause": 0,
+      "tiSet": 1,
+      "backupRate": 12,
+      "stActive": false,
+      "fio2": 30,
+      "rr": 12,
+      "triggerMode": "flow",
+      "trigger": 1.5,
+      "cycling": 25,
+      "tiMax": 2,
+      "riseTime": 150,
+      "leak": 0
+    },
+    "patient": {
+      "height": 175,
+      "gender": "male",
+      "compliance": 100,
+      "resistance": 3,
+      "rrSpont": 20,
+      "pmus": 3,
+      "responsiveness": 50,
+      "responsivePmus": false,
+      "pmusOffset": 0,
+      "tiNeural": 1,
+      "kobleTiNeural": false,
+      "triseNeural": 0.2,
+      "tholdNeural": 0.35,
+      "tdecayNeural": 0.6,
+      "pmusExp": 0,
+      "recoil": 0,
+      "flowLimitation": 0,
+      "criticalClosingPressure": 0,
+      "flowConductance": 1,
+      "peepStenting": 0,
+      "expRatio": 1.2,
+      "variability": 0,
+      "cardiacArtifact": 0,
+      "stressIndex": 1,
+      "stressIndexEnabled": false,
+      "uip": 30,
+      "uipEnabled": false,
+      "airwayOpening": 0,
+      "recruitedVolume": 0,
+      "entrainmentRatio": 1,
+      "entrainmentEnabled": false
+    },
+    "alarms": {
+      "apneaDelay": 20,
+      "alarmLeak": 40,
+      "alarmLowVt": 300,
+      "alarmHighVt": 800,
+      "alarmLowRr": 0,
+      "alarmHighRr": 30,
+      "alarmHighPpeak": 40
+    }
+  },
+  "uiConfig": {
+    "visibleControls": [
+      "gender",
+      "kobleTiNeural",
+      "airwayOpening"
+    ],
+    "controls": [
+      {
+        "key": "gender",
+        "group": "patient",
+        "label": "Biologisk kjønn",
+        "type": "buttons",
+        "unit": null,
+        "default": "male",
+        "options": [
+          {
+            "value": "male",
+            "label": "Mann"
+          },
+          {
+            "value": "female",
+            "label": "Kvinne"
+          }
+        ]
+      },
+      {
+        "key": "kobleTiNeural",
+        "group": "patient",
+        "label": "Utled innsatsform fra Ti_neural",
+        "type": "checkbox",
+        "unit": null,
+        "default": false
+      },
+      {
+        "key": "airwayOpening",
+        "group": "patient",
+        "label": "Åpningstrykk luftvei",
+        "type": "range",
+        "unit": "cmH₂O",
+        "default": 0,
+        "min": 0,
+        "max": 35,
+        "step": 1
+      }
+    ]
+  }
+}

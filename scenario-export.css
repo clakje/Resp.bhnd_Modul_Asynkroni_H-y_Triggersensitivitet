@@ -1,0 +1,256 @@
+/* =========================================================================
+   scenario-export.css — Stil for avkrysningsboksene ved hver innstilling
+   og for fanen «Scenario & eksport».
+   ========================================================================= */
+
+/* -------------------------------------------------------------------------
+   1. Avkrysningsboks ved hver innstilling («Justerbar» / «Låst»)
+   ------------------------------------------------------------------------- */
+.param-flag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    flex: 0 0 auto;
+    padding: 2px 7px;
+    border-radius: 4px;
+    border: 1px dashed rgba(148, 163, 184, 0.45);
+    background: rgba(15, 23, 42, 0.55);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: #94a3b8;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.18s ease;
+    margin-right: 6px;
+}
+
+.param-flag:hover {
+    border-color: rgba(56, 189, 248, 0.7);
+    color: #e2e8f0;
+}
+
+.param-flag.is-on {
+    border-style: solid;
+    border-color: rgba(34, 197, 94, 0.7);
+    background: rgba(34, 197, 94, 0.14);
+    color: #86efac;
+}
+
+.param-flag-box {
+    width: 13px;
+    height: 13px;
+    margin: 0;
+    accent-color: var(--color-success);
+    cursor: pointer;
+}
+
+.param-flag-text {
+    white-space: nowrap;
+}
+
+/* Kort som eksponerer minst én parameter for deltakeren markeres tydelig */
+.control-card.param-card-selected {
+    box-shadow: inset 3px 0 0 rgba(34, 197, 94, 0.75);
+}
+
+/* -------------------------------------------------------------------------
+   2. Fanen «Scenario & eksport»
+   ------------------------------------------------------------------------- */
+.export-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 14px;
+    align-items: start;
+}
+
+.export-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.export-fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 10px;
+}
+
+.export-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.export-field-wide {
+    grid-column: 1 / -1;
+}
+
+.export-field em {
+    font-style: normal;
+    font-weight: 500;
+    color: #94a3b8;
+}
+
+.export-field input[type="text"],
+.export-field textarea {
+    width: 100%;
+    box-sizing: border-box;
+    background: rgba(10, 15, 26, 0.85);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 7px 9px;
+    color: var(--text-main);
+    font-family: inherit;
+    font-size: 12.5px;
+    font-weight: 500;
+    resize: vertical;
+}
+
+.export-field input[type="text"]:focus,
+.export-field textarea:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.18);
+}
+
+/* Hurtigvalg for hele grupper */
+.export-bulk {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.export-bulk .btn-pill {
+    border: 1px solid var(--border-color);
+    background: rgba(15, 23, 42, 0.6);
+}
+
+.export-bulk .btn-pill:hover {
+    border-color: rgba(56, 189, 248, 0.6);
+}
+
+/* Oppsummering av valgte parametere */
+.export-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 320px;
+    overflow-y: auto;
+}
+
+.export-group-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-accent);
+    margin-bottom: 4px;
+}
+
+.export-group ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.export-group li {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 10px;
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background: rgba(15, 23, 42, 0.55);
+    border-left: 2px solid rgba(34, 197, 94, 0.6);
+}
+
+.export-group li span {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: #94a3b8;
+    white-space: nowrap;
+}
+
+.export-empty {
+    font-size: 12px;
+    color: #94a3b8;
+    font-style: italic;
+    padding: 10px;
+    border: 1px dashed var(--border-color);
+    border-radius: 6px;
+}
+
+/* Eksportknapper */
+.export-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.btn-export {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    background: rgba(15, 23, 42, 0.7);
+    color: var(--text-main);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.18s ease;
+}
+
+.btn-export:hover {
+    border-color: var(--color-accent);
+    background: rgba(56, 189, 248, 0.12);
+}
+
+.btn-export.primary {
+    border-color: rgba(34, 197, 94, 0.6);
+    background: linear-gradient(135deg, #16a34a, #15803d);
+    color: #ffffff;
+}
+
+.btn-export.primary:hover {
+    box-shadow: 0 0 10px rgba(34, 197, 94, 0.45);
+}
+
+/* Forhåndsvisning av JSON */
+.export-preview-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #94a3b8;
+    margin-top: 4px;
+}
+
+.export-preview {
+    margin: 0;
+    max-height: 320px;
+    overflow: auto;
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    background: #0a0e17;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 1.5;
+    color: #cbd5e1;
+    white-space: pre;
+}

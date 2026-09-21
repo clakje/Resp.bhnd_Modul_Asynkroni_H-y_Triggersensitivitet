@@ -1,0 +1,11 @@
+node_modules/
+package-lock.json
+
+# OS- og editorfiler
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+
+# Eksporterte scenarier (lokale arbeidsfiler)
+*.local.json
