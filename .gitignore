@@ -7,5 +7,5 @@ Thumbs.db
 desktop.ini
 .vscode/
 
-# Eksporterte scenarier (lokale arbeidsfiler)
+# Lokale test/arbeidsfiler
 *.local.json
