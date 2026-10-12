@@ -96,8 +96,7 @@ window.SCENARIO_DATA = {
       "cycling",
       "triggerMode",
       "trigger",
-      "riseTime",
-      "kobleTiNeural"
+      "riseTime"
     ],
     "controls": [
       {
@@ -199,14 +198,6 @@ window.SCENARIO_DATA = {
         "min": 50,
         "max": 900,
         "step": 25
-      },
-      {
-        "key": "kobleTiNeural",
-        "group": "patient",
-        "label": "Utled innsatsform fra Ti_neural",
-        "type": "checkbox",
-        "unit": null,
-        "default": false
       }
     ]
   }
